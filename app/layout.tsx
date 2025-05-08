@@ -1,8 +1,9 @@
-import type React from "react"
-import { ThemeProvider } from "next-themes"
-import { AuthProvider } from "../lib/auth-context"
-import ContextProvider from "../context"
-import "../styles/globals.css"
+import type React from "react";
+import { ThemeProvider } from "next-themes";
+import { AuthProvider } from "../lib/auth-context";
+import ContextProvider from "../context";
+import { cookies } from "next/headers";
+import "../styles/globals.css";
 
 export const metadata = {
   title: "OanicAI Dashboard",
@@ -10,27 +11,25 @@ export const metadata = {
   icons: {
     icon: "/favicon.ico",
   },
-}
+};
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-  cookies,
 }: {
-  children: React.ReactNode
-  cookies?: string | null
+  children: React.ReactNode;
 }) {
+  const cookieStore = await cookies();
   return (
     <html lang="en">
-       
-       <body>
+      <body>
         <ThemeProvider attribute="class" defaultTheme="dark">
-          <ContextProvider cookies={cookies || null}>
+          <ContextProvider
+            cookies={decodeURIComponent(cookieStore.toString()) || null}
+          >
             <AuthProvider>{children}</AuthProvider>
           </ContextProvider>
         </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }
-
-

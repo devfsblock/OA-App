@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { useEffect } from "react"
-import { useRouter } from "next/router"
-import { motion } from "framer-motion"
-import { useAuth } from "../lib/auth-context"
-import Sidebar from "./sidebar"
-import { ModeToggle } from "./mode-toggle"
+import { useEffect, ReactNode } from "react";
+import { useRouter } from "next/router";
+import { motion } from "framer-motion";
+import { useAuth } from "../lib/auth-context";
+import Sidebar from "./sidebar";
+import { ModeToggle } from "./mode-toggle";
 
-export default function ProtectedLayout({ children }) {
+export default function ProtectedLayout({ children }: { children: ReactNode }) {
   const router = useRouter()
   const { isAuthenticated } = useAuth()
 
